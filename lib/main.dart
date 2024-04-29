@@ -1,17 +1,21 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: Colors.blue, statusBarBrightness: Brightness.light),
+      statusBarColor: Colors.blue,
+      statusBarBrightness: Brightness.light,
+    ),
   );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class LanguageSwitcher extends StatefulWidget {
-  const LanguageSwitcher({super.key});
+  const LanguageSwitcher({Key? key}) : super(key: key);
 
   @override
   _LanguageSwitcherState createState() => _LanguageSwitcherState();
@@ -32,11 +36,61 @@ class LanguageSwitcher extends StatefulWidget {
 
 class _LanguageSwitcherState extends State<LanguageSwitcher> {
   bool isEnglishShown = true;
+  String englishText = '';
+  String spanishText = '';
+  final String apiKey = 'e545320107msh1ced9a919b81761p1bab3ajsnf252efe3a280';
 
-  void _toggleLanguage() {
-    setState(() {
-      isEnglishShown = !isEnglishShown;
-    });
+  Future<String> translateText(String text, String targetLanguage) async {
+    try {
+      final Uri url = Uri.parse("https://google-translate113.p.rapidapi.com/api/v1/translator/text");
+      final Map<String, String> headers = {
+        'content-type': "application/x-www-form-urlencoded",
+        'X-RapidAPI-Key': apiKey,
+        'X-RapidAPI-Host': "google-translate113.p.rapidapi.com",
+      };
+      final String payload = "from=auto&to=$targetLanguage&text=$text";
+
+      final http.Response response = await http.post(url, headers: headers, body: payload);
+      if (response.statusCode == 200) {
+        print('Response data: ${response.body}');
+        final Map<String, dynamic> responseData = json.decode(response.body);
+
+        if (responseData.containsKey('trans')) {
+          final String translatedText = responseData['trans'];
+          return translatedText;
+        } else if (responseData.containsKey('output')) {
+          final String translatedText = responseData['output'];
+          return translatedText;
+        } else if (responseData.containsKey('translation')) {
+          final String translatedText = responseData['translation'];
+          return translatedText;
+        } else {
+          throw Exception('Failed to translate text: Translation data not found in response');
+        }
+      } else {
+        throw Exception('Failed to translate text: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      throw Exception('Translation failed: $e');
+    }
+  }
+
+
+
+
+
+
+  void _updateTranslation(String text) async {
+    try {
+      if (isEnglishShown) {
+        spanishText = await translateText(text, 'es');
+      } else {
+        englishText = await translateText(text, 'en');
+      }
+      setState(() {});
+    } catch (e) {
+      print('Translation failed: $e');
+    }
   }
 
   @override
@@ -60,16 +114,20 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  isEnglishShown ? "English" : "Uzbek",
+                  isEnglishShown ? "English" : "Spanish",
                   style: const TextStyle(fontSize: 25),
                 ),
                 IconButton(
                   icon: const Icon(Icons.compare_arrows),
                   iconSize: 35,
-                  onPressed: _toggleLanguage,
+                  onPressed: () {
+                    setState(() {
+                      isEnglishShown = !isEnglishShown;
+                    });
+                  },
                 ),
                 Text(
-                  isEnglishShown ? "Uzbek" : "English",
+                  isEnglishShown ? "Spanish" : "English",
                   style: const TextStyle(fontSize: 25),
                 )
               ],
@@ -131,18 +189,19 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      Container(
-                        child: TextField(
-                          maxLength: 500,
-                          maxLines: null,
-                          decoration: InputDecoration(
-                            hintText: "Text",
-                            border: InputBorder.none,
-                            labelStyle: TextStyle(
-                              fontSize: 16.0,
-                            ),
+                      TextField(
+                        maxLength: 500,
+                        maxLines: null,
+                        decoration: const InputDecoration(
+                          hintText: "Text",
+                          border: InputBorder.none,
+                          labelStyle: TextStyle(
+                            fontSize: 16.0,
                           ),
                         ),
+                        onChanged: (value) {
+                          _updateTranslation(value);
+                        },
                       ),
                       const Expanded(child: SizedBox()),
                       Align(
@@ -182,9 +241,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      const Text(
-                        'Lorem Ipsum',
-                        style: TextStyle(
+                      Text(
+                        isEnglishShown ? spanishText : englishText,
+                        style: const TextStyle(
                           fontSize: 16.0,
                         ),
                       ),
