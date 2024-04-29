@@ -39,6 +39,10 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
   bool isEnglishShown = true;
   String englishText = '';
   String spanishText = '';
+
+  String englishTitle = 'English';
+  String spanishTitle = 'Spanish';
+
   final String apiKey = 'e545320107msh1ced9a919b81761p1bab3ajsnf252efe3a280';
 
   Future<String> translateText(String text, String targetLanguage) async {
@@ -82,8 +86,10 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
     try {
       if (isEnglishShown) {
         spanishText = await translateText(text, 'es');
+        englishText = text;
       } else {
         englishText = await translateText(text, 'en');
+        spanishText = text;
       }
       setState(() {});
     } catch (e) {}
@@ -91,6 +97,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
 
   @override
   Widget build(BuildContext context) {
+    englishTitle = isEnglishShown ? 'English' : 'Spanish';
+    spanishTitle = isEnglishShown ? 'Spanish' : 'English';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -119,6 +128,8 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                   onPressed: () {
                     setState(() {
                       isEnglishShown = !isEnglishShown;
+                      englishText = '';
+                      spanishText = '';
                     });
                   },
                 ),
@@ -177,9 +188,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      const Text(
-                        'English',
-                        style: TextStyle(
+                      Text(
+                        englishTitle,
+                        style: const TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -229,9 +240,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      const Text(
-                        'Spanish',
-                        style: TextStyle(
+                      Text(
+                        spanishTitle,
+                        style: const TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
