@@ -113,7 +113,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 250,
+                  height: 270,
                   margin: const EdgeInsets.all(16.0),
                   padding: const EdgeInsets.all(16.0),
                   decoration: const BoxDecoration(
@@ -131,10 +131,17 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      const Text(
-                        'Lorem Ipsum',
-                        style: TextStyle(
-                          fontSize: 16.0,
+                      Container(
+                        child: TextField(
+                          maxLength: 500,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            hintText: "Text",
+                            border: InputBorder.none,
+                            labelStyle: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
                         ),
                       ),
                       const Expanded(child: SizedBox()),
@@ -150,7 +157,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 250,
+                  height: 270,
                   margin: const EdgeInsets.all(16.0),
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
