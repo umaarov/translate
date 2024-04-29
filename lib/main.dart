@@ -11,20 +11,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Translate',
       debugShowCheckedModeBanner: false,
-      home: const LanguageSwitcher(),
+      home: LanguageSwitcher(),
     );
   }
 }
 
 class LanguageSwitcher extends StatefulWidget {
-  const LanguageSwitcher({Key? key}) : super(key: key);
+  const LanguageSwitcher({super.key});
 
   @override
   _LanguageSwitcherState createState() => _LanguageSwitcherState();
@@ -50,150 +50,152 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                isEnglishShown ? "English" : "Uzbek",
-                style: const TextStyle(fontSize: 25),
-              ),
-              IconButton(
-                icon: const Icon(Icons.compare_arrows),
-                iconSize: 35,
-                onPressed: _toggleLanguage,
-              ),
-              Text(
-                isEnglishShown ? "Uzbek" : "English",
-                style: const TextStyle(fontSize: 25),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.mic_rounded,
-                  color: Colors.grey,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  isEnglishShown ? "English" : "Uzbek",
+                  style: const TextStyle(fontSize: 25),
                 ),
-                iconSize: 35,
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.camera_alt,
-                  color: Colors.grey,
+                IconButton(
+                  icon: const Icon(Icons.compare_arrows),
+                  iconSize: 35,
+                  onPressed: _toggleLanguage,
                 ),
-                iconSize: 35,
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.home_outlined,
-                  color: Colors.grey,
+                Text(
+                  isEnglishShown ? "Uzbek" : "English",
+                  style: const TextStyle(fontSize: 25),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.mic_rounded,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 35,
+                  onPressed: () {},
                 ),
-                iconSize: 35,
-                onPressed: () {},
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Column(
-            children: [
-              Container(
-                width: 375,
-                height: 250,
-                margin: const EdgeInsets.all(16.0),
-                    padding: const EdgeInsets.all(16.0),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Color.fromARGB(200, 236, 236, 236),
+                IconButton(
+                  icon: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 35,
+                  onPressed: () {},
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      'English',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                IconButton(
+                  icon: const Icon(
+                    Icons.home_outlined,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 35,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 250,
+                  margin: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Color.fromARGB(200, 236, 236, 236),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const Text(
+                        'English',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Lorem Ipsum',
-                      style: TextStyle(
-                        fontSize: 16.0,
+                      const SizedBox(height: 8.0),
+                      const Text(
+                        'Lorem Ipsum',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
                       ),
-                    ),
-                    Expanded(child: SizedBox()),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        icon: Icon(Icons.volume_up),
-                        onPressed: () {},
+                      const Expanded(child: SizedBox()),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: IconButton(
+                          icon: const Icon(Icons.volume_up),
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                width: 375,
-                height: 250,
-                margin: const EdgeInsets.all(16.0),
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                    ),
-                  ],
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 250,
+                  margin: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const Text(
+                        'Spanish',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      const Text(
+                        'Lorem Ipsum',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      const Expanded(child: SizedBox()),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: IconButton(
+                          icon: const Icon(Icons.volume_up),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      'Spanish',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Lorem Ipsum',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    Expanded(child: SizedBox()),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        icon: Icon(Icons.volume_up),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
