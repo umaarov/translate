@@ -114,7 +114,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                 width: 375,
                 height: 250,
                 margin: const EdgeInsets.all(16.0),
-                padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Color.fromARGB(200, 236, 236, 236),
@@ -167,7 +167,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Text(
-                      'Uzbek',
+                      'Spanish',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
