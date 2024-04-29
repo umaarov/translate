@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +16,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class LanguageSwitcher extends StatefulWidget {
-  const LanguageSwitcher({Key? key}) : super(key: key);
+  const LanguageSwitcher({super.key});
 
   @override
   _LanguageSwitcherState createState() => _LanguageSwitcherState();
@@ -42,7 +43,8 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
 
   Future<String> translateText(String text, String targetLanguage) async {
     try {
-      final Uri url = Uri.parse("https://google-translate113.p.rapidapi.com/api/v1/translator/text");
+      final Uri url = Uri.parse(
+          "https://google-translate113.p.rapidapi.com/api/v1/translator/text");
       final Map<String, String> headers = {
         'content-type': "application/x-www-form-urlencoded",
         'X-RapidAPI-Key': apiKey,
@@ -50,9 +52,9 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
       };
       final String payload = "from=auto&to=$targetLanguage&text=$text";
 
-      final http.Response response = await http.post(url, headers: headers, body: payload);
+      final http.Response response =
+          await http.post(url, headers: headers, body: payload);
       if (response.statusCode == 200) {
-        print('Response data: ${response.body}');
         final Map<String, dynamic> responseData = json.decode(response.body);
 
         if (responseData.containsKey('trans')) {
@@ -65,7 +67,8 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
           final String translatedText = responseData['translation'];
           return translatedText;
         } else {
-          throw Exception('Failed to translate text: Translation data not found in response');
+          throw Exception(
+              'Failed to translate text: Translation data not found in response');
         }
       } else {
         throw Exception('Failed to translate text: ${response.reasonPhrase}');
@@ -75,11 +78,6 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
     }
   }
 
-
-
-
-
-
   void _updateTranslation(String text) async {
     try {
       if (isEnglishShown) {
@@ -88,9 +86,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
         englishText = await translateText(text, 'en');
       }
       setState(() {});
-    } catch (e) {
-      print('Translation failed: $e');
-    }
+    } catch (e) {}
   }
 
   @override
