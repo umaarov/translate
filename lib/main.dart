@@ -43,7 +43,7 @@ class _LanguageSwitcherState extends State<LanguageSwitcher> {
   String englishTitle = 'English';
   String spanishTitle = 'Spanish';
 
-  final String apiKey = 'e545320107msh1ced9a919b81761p1bab3ajsnf252efe3a280';
+  final String apiKey = 'api';
 
   Future<String> translateText(String text, String targetLanguage) async {
     try {
